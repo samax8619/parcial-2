@@ -1,4 +1,4 @@
-# Sistema de Control de Tareas de Usuarios (versión corta)
+# Sistema de Control de Tareas de Usuarios 
 ROLES = ("Admin", "Empleado")
 ESTADOS = ("Pendiente", "Completada")
 usuarios = []  # lista de diccionarios
