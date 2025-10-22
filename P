@@ -1,1 +1,59 @@
-parcial repo
+# Sistema de Control de Tareas de Usuarios (versión corta)
+ROLES = ("Admin", "Empleado")
+ESTADOS = ("Pendiente", "Completada")
+usuarios = []  # lista de diccionarios
+
+def crear_usuario():
+    nombre = input("Nombre: ")
+    ident = input("Identificación: ")
+    contacto = input("Contacto: ")
+    rol = input(f"Rol {ROLES}: ")
+    if rol not in ROLES: rol = "Empleado"
+    usuarios.append({"id": len(usuarios)+1, "nombre": nombre, "ident": ident,
+                     "contacto": contacto, "rol": rol, "tareas": []})
+    print("Usuario registrado.")
+
+def listar_usuarios():
+    for u in usuarios:
+        print(f'{u["id"]} - {u["nombre"]} ({u["rol"]})')
+
+def crear_tarea():
+    if not usuarios: return print("No hay usuarios.")
+    uid = int(input("ID usuario: "))
+    usuario = next((u for u in usuarios if u["id"] == uid), None)
+    if not usuario: return print("Usuario no existe.")
+    titulo = input("Título tarea: ")
+    estado = input(f"Estado {ESTADOS}: ")
+    if estado not in ESTADOS: estado = "Pendiente"
+    usuario["tareas"].append({"titulo": titulo, "estado": estado})
+    print("Tarea asignada.")
+
+def listar_tareas():
+    for u in usuarios:
+        print(f'\nUsuario: {u["nombre"]}')
+        for t in u["tareas"]:
+            print(f' - {t["titulo"]} [{t["estado"]}]')
+
+def menu_usuarios():
+    while True:
+        op = input("\n[1] Crear usuario [2] Listar [0] Volver: ")
+        if op == "1": crear_usuario()
+        elif op == "2": listar_usuarios()
+        elif op == "0": break
+
+def menu_tareas():
+    while True:
+        op = input("\n[1] Crear tarea [2] Listar tareas [0] Volver: ")
+        if op == "1": crear_tarea()
+        elif op == "2": listar_tareas()
+        elif op == "0": break
+
+def main():
+    while True:
+        op = input("\nMenú Principal: [1] Usuarios [2] Tareas [0] Salir: ")
+        if op == "1": menu_usuarios()
+        elif op == "2": menu_tareas()
+        elif op == "0": break
+
+if __name__ == "__main__":
+    main()
